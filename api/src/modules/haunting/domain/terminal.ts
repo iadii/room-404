@@ -74,3 +74,4 @@ export const ROOM_FILES: Record<Room, readonly RoomFile[]> = {
     },
   ],
 };
+

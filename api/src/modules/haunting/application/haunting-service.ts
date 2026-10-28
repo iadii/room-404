@@ -69,6 +69,9 @@ export class HauntingService {
         "  ls, dir              List files and sector logs in current room",
         "  cat <file>           Inspect and decrypt sector records",
         "  cd <room>, nav       Navigate sectors (lobby, hallway, suite, basement)",
+        "  pwd                  Print working directory / current sector path",
+        "  date                 Inspect hotel system time clock",
+        "  ps                   List running system processes",
         "  whoami               Inspect current ledger registration",
         "  status, pulse        Check fear pulse and recovered records",
         "  dial 404, call 404   Test telephony switchboard line 404",
@@ -203,7 +206,37 @@ export class HauntingService {
       };
     }
 
-    // 5. Whoami
+    // 5. PWD (print working directory)
+    if (command === "pwd") {
+      return {
+        output: `/var/briar/hotel/sectors/${currentSession.room}\n[WHISPER]: “You are standing above where the records were buried.”`,
+        session: currentSession,
+      };
+    }
+
+    // 6. DATE (clock desynchronization)
+    if (command === "date") {
+      return {
+        output: `SYSTEM CLOCK: FRI OCT 31 03:17:48 EST 1978\nHOST DRIFT: +48 YEARS (DESYNCHRONIZED)\n[WHISPER]: “Time stopped when they locked the door.”`,
+        session: currentSession,
+      };
+    }
+
+    // 7. PS (running processes)
+    if (command === "ps" || command === "top") {
+      const psLines = [
+        "  PID TTY      TIME CMD",
+        "    1 ?    00:00:01 init_system",
+        "   41 tty1 00:00:00 telephony_switchboard (DEAD_LINE)",
+        "  404 tty4 48:00:00 elena_voss_daemon (OCCUPYING_CIRCUIT)",
+        " 2026 tty4 00:00:00 guest_shell (YOU)",
+        "",
+        `[WHISPER]: “There are two of us in this thread.”`,
+      ];
+      return { output: psLines.join("\n"), session: currentSession };
+    }
+
+    // 8. Whoami
     if (command === "whoami") {
       const roomDetails = rooms[currentSession.room as Room];
       const lines = [
@@ -221,7 +254,7 @@ export class HauntingService {
       return { output: lines.join("\n"), session: currentSession };
     }
 
-    // 6. Status / Pulse / Fear
+    // 9. Status / Pulse / Fear
     if (command === "status" || command === "pulse" || command === "fear") {
       const isHigh = currentSession.fear >= 75;
       const lines = [
@@ -235,7 +268,7 @@ export class HauntingService {
       return { output: lines.join("\n"), session: currentSession };
     }
 
-    // 7. Dial 404 / Call 404
+    // 10. Dial 404 / Call 404
     if (trimmed.toLowerCase().includes("dial") || trimmed.toLowerCase().includes("call")) {
       if (currentSession.room === "suite") {
         const updatedSession = await this.act(id, "listen_phone");
@@ -253,7 +286,7 @@ export class HauntingService {
       };
     }
 
-    // 8. Knocks / Answer (Face ghost)
+    // 11. Knocks / Answer (Face ghost)
     if (["knocks", "answer", "face", "answer knocks"].includes(trimmed.toLowerCase())) {
       const faceAction = currentSession.actions.find((a) => a.id === "face_ghost");
       if (!faceAction) {
@@ -282,7 +315,7 @@ export class HauntingService {
       };
     }
 
-    // 9. Conversational input / talk / ask
+    // 12. Conversational input / talk / ask
     let speech = trimmed;
     if (speech.toLowerCase().startsWith("talk ")) speech = speech.slice(5).trim();
     else if (speech.toLowerCase().startsWith("ask ")) speech = speech.slice(4).trim();
