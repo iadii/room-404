@@ -19,7 +19,7 @@ Room 404 embodies this across both a retro browser console and a live shell CLI.
 
 On October 31, 1978, a guest named Elena Voss checked into Room 404 of the Briar House Hotel and never checked out. Her second line in the ledger was scraped away until the paper was thin enough to see light through. Exactly forty-eight years later—on October 31, 2026 at 03:17 AM—the hotel’s obsolete management computer (**BriarOS v4.04 on a PDP-11**) suddenly rebooted and registered a new guest: **you**.
 
-{% include "./demo/landing.png" %}
+![Room 404 Check-in Landing Interface](https://raw.githubusercontent.com/iadii/room-404/main/docs/demo/landing.png)
 
 ### Two Ways to Experience the Haunting:
 1. **Interactive Web CRT Ghost Terminal & CCTV Console**:
@@ -31,7 +31,7 @@ On October 31, 1978, a guest named Elena Voss checked into Room 404 of the Briar
    * Run the terminal directly inside your local macOS/Linux terminal (`zsh`/`bash`).
    * Takes over your shell with retro ANSI borders, processes commands, and streams eerie Gemma 2 AI whispers into your prompt.
 
-{% include "./demo/game.png" %}
+![Room 404 In-Game CRT Ghost Terminal and Surveillance](https://raw.githubusercontent.com/iadii/room-404/main/docs/demo/game.png)
 
 ---
 
