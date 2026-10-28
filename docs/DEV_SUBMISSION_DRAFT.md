@@ -37,7 +37,7 @@ On October 31, 1978, a guest named Elena Voss checked into Room 404 of the Briar
 
 ## Demo
 
-* **Walkthrough Video**: <!-- REPLACE WITH YOUR 60-90 SECOND LOOM OR YOUTUBE DEMO LINK -->
+* **Walkthrough Video**: <!-- Paste your 60-90 second Loom or YouTube walkthrough demo link here -->
 * **Sample Case Transcript**: [Read an exported case transcript](https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404/blob/main/docs/demo/sample-transcript.md)
 * **Visual Tour**:
   * [The Landing Check-in Screen](https://raw.githubusercontent.com/REPLACE_WITH_YOUR_USERNAME/room-404/main/docs/demo/landing.png)
@@ -90,23 +90,36 @@ If an LLM can hallucinate whatever it wants, horror loses its stakes. If the AI 
 
 ## Why Does Open Innovation Matter?
 
-The Week 4 challenge asks: *Why does open innovation matter for what you built? What did it make possible that a closed API wouldn't?*
+The challenge prompt poses five critical questions on open innovation:
 
-### 1. Freedom from Corporate Content Filtering on Creative Horror
-Commercial closed-source APIs frequently over-censor psychological horror, spooky fiction, and eerie lore due to blunt commercial safety filters. Google's open-weight **Gemma 2 (`gemma2-9b-it`)** allows developers to build creative, narrative art with nuanced tension without fear of arbitrary cloud account bans, prompt refusals, or sanitized output.
+### 1. Where does your open-based approach work better than a closed one?
+Commercial closed-source APIs frequently over-censor psychological horror, spooky fiction, and eerie lore due to blunt commercial safety filters. Attempting to generate a scene where a ghost possesses a terminal or whispers about an unsolved disappearance from 1978 often triggers generic policy refusals or corporate safety disclaimers. 
 
-### 2. Zero Vendor Lock-in & Complete Model Decoupling
-Because Room 404 is built on an explicit `SceneNarrator` port and OpenAI-compatible completions, the game is completely uncoupled from any single corporate provider. We can swap between Gemma 2 9B, Gemma 2 27B, or fine-tuned community horror models with a single environment variable change.
+Google's open-weight **Gemma 2 (`gemma2-9b-it`)** allows developers to build creative, narrative art with authentic tension, nuanced dread, and gothic atmosphere—all while enforcing clear boundaries through strict typed JSON schemas rather than blunt prompt refusals.
 
-### 3. Absolute Privacy for Player Stories
-Every session transcript is saved locally in private JSON files (`api/data/`) with file mode `0600`. No telemetry, player prompts, or transcripts are sold or harvested.
+### 2. Does it keep someone's data off a server they don't control?
+Yes. Every session transcript, player alias, pulse rate, and clue progression is stored exclusively on the player's local machine in `api/data/` as private JSON files with restricted file mode `0600`. No player history, queries, or stories are saved to a third-party database, monetization engine, or cloud telemetry service.
+
+### 3. Does it let you fine-tune, swap models, or change how your agent behaves?
+Because Room 404 is built on an explicit `SceneNarrator` port and OpenAI-compatible completions, the application is completely decoupled from any single vendor. We can seamlessly swap between `gemma2-9b-it`, `gemma2-27b-it`, or future fine-tuned gothic horror community weights with a single environment variable change—without changing a single line of game logic.
+
+### 4. Does it run on a laptop with no internet?
+While the default development configuration uses Groq for sub-second Gemma 2 inference, the architecture is designed so the same `SceneNarrator` interface can target local runtimes (such as Ollama or llama.cpp). This means the ghost can literally run offline on a laptop with the lights and the internet turned off.
+
+### 5. Does it cost nothing to run?
+Open weights democratize development costs. Running Gemma 2 locally costs $0.00 in API fees, and running it on Groq open-weights incurs near-zero cost. Players can explore dozens of rooms, ask scores of questions, and trigger endless terminal manifestations without accumulating an unpredictable cloud bill.
 
 ---
 
 ## My Agent Session
 
-<!-- Optional: Embed your DevRelay session link or liquid tag below -->
-{% agent_session REPLACE_WITH_SESSION_ID %}
+Show your work: the interactive development of Room 404—from architecture design and domain refactoring to possessed terminal commands and Gemma 2 integration—was orchestrated through an AI agent pair-programming session.
+
+You can inspect the exported case transcript directly:
+* [Sample Room 404 Case Transcript](https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404/blob/main/docs/demo/sample-transcript.md)
+
+<!-- If embedding your DevRelay session ID, use the Liquid tag: -->
+<!-- {% agent_session YOUR_SESSION_ID %} -->
 
 ---
 
@@ -127,5 +140,8 @@ In that moment, it wasn't just a chatbot output. The terminal felt genuinely pos
 
 ## Prize Categories
 
-* **Best Use of Gemma ($200 Featured Category)**:
-  Room 404 is natively built around Google's open-weight **Gemma 2 (`gemma2-9b-it`)**, using structured JSON extraction to reliably drive retro terminal interactions, eerie whispers, and CRT screen manifestations.
+### Best Use of Gemma ($200 Featured Category)
+Room 404 is natively built around Google's open-weight **Gemma 2 (`gemma2-9b-it`)**:
+* **High-Speed Terminal Interactions**: Serving Gemma 2 on Groq delivers instant token generation, making the interactive PDP-11 terminal commands (`cat`, `whoami`, `dial 404`, `ps`) feel snappy and responsive like a real hardware terminal.
+* **Strict JSON Extraction**: Gemma 2 reliably extracts typed payloads containing second-person narrative prose, whispers, physical screen effect enums (`flicker`, `shadow`, `knock`, `mirror`, `static`), and cited evidence IDs.
+* **Dual-Interface Voice**: Gemma 2 powers both the browser-based CRT Ghost Terminal and the standalone macOS shell CLI (`npm run haunt`).
