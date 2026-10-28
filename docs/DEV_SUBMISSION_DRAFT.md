@@ -38,10 +38,10 @@ On October 31, 1978, a guest named Elena Voss checked into Room 404 of the Briar
 ## Demo
 
 * **Walkthrough Video**: <!-- Paste your 60-90 second Loom or YouTube walkthrough demo link here -->
-* **Sample Case Transcript**: [Read an exported case transcript](https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404/blob/main/docs/demo/sample-transcript.md)
+* **Sample Case Transcript**: [Read an exported case transcript](https://github.com/iadii/room-404/blob/main/docs/demo/sample-transcript.md)
 * **Visual Tour**:
-  * [The Landing Check-in Screen](https://raw.githubusercontent.com/REPLACE_WITH_YOUR_USERNAME/room-404/main/docs/demo/landing.png)
-  * [The In-Game Haunting Interface](https://raw.githubusercontent.com/REPLACE_WITH_YOUR_USERNAME/room-404/main/docs/demo/game.png)
+  * [The Landing Check-in Screen](https://raw.githubusercontent.com/iadii/room-404/main/docs/demo/landing.png)
+  * [The In-Game Haunting Interface](https://raw.githubusercontent.com/iadii/room-404/main/docs/demo/game.png)
 * **Instructions for Judges to Test Locally**:
   1. Clone the repository and run `cd room-404/api && cp .env.example .env`.
   2. Add your Groq API key (`GROQ_API_KEY=...` with default `GROQ_MODEL=gemma2-9b-it`).
@@ -53,9 +53,9 @@ On October 31, 1978, a guest named Elena Voss checked into Room 404 of the Briar
 
 ## Code
 
-* **GitHub Repository**: [https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404](https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404) (MIT Licensed)
+* **GitHub Repository**: [https://github.com/iadii/room-404](https://github.com/iadii/room-404) (MIT Licensed)
 
-{% github https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404 %}
+{% github https://github.com/iadii/room-404 %}
 
 ---
 
@@ -116,7 +116,7 @@ Open weights democratize development costs. Running Gemma 2 locally costs $0.00 
 Show your work: the interactive development of Room 404—from architecture design and domain refactoring to possessed terminal commands and Gemma 2 integration—was orchestrated through an AI agent pair-programming session.
 
 You can inspect the exported case transcript directly:
-* [Sample Room 404 Case Transcript](https://github.com/REPLACE_WITH_YOUR_USERNAME/room-404/blob/main/docs/demo/sample-transcript.md)
+* [Sample Room 404 Case Transcript](https://github.com/iadii/room-404/blob/main/docs/demo/sample-transcript.md)
 
 <!-- If embedding your DevRelay session ID, use the Liquid tag: -->
 <!-- {% agent_session YOUR_SESSION_ID %} -->
