@@ -33,3 +33,4 @@ export function ClueModal({ clue, onClose }: ClueModalProps) {
     </div>
   );
 }
+

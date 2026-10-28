@@ -53,3 +53,4 @@ export interface Health {
   readonly model: string;
   readonly aiReady: boolean;
 }
+

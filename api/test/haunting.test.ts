@@ -95,6 +95,24 @@ test("a visit collects four records and gates its ending", async () => {
   assert.match((await service.export(visit.id)).markdown, /Elena|Room 404|REGISTER/);
 });
 
+test("terminal commands inspect files and interact with ghost", async () => {
+  const service = new HauntingService(new MemoryVisits(), narrator);
+  const visit = await service.start("NIGHT GUEST");
+
+  const helpRes = await service.executeTerminalCommand(visit.id, "help");
+  assert.match(helpRes.output, /BRIAR-OS/);
+
+  const lsRes = await service.executeTerminalCommand(visit.id, "ls");
+  assert.match(lsRes.output, /ledger_1978\.log/);
+
+  const catRes = await service.executeTerminalCommand(visit.id, "cat ledger_1978.log");
+  assert.match(catRes.output, /Elena Voss/);
+  assert.equal(catRes.session.clues.includes("REGISTER"), true);
+
+  const whoamiRes = await service.executeTerminalCommand(visit.id, "whoami");
+  assert.match(whoamiRes.output, /NIGHT GUEST/);
+});
+
 test("failed narration leaves the saved visit untouched", async () => {
   const repository = new MemoryVisits();
   const service = new HauntingService(repository, narrator);
@@ -137,7 +155,7 @@ test("HTTP boundary validates input and blocks cross-origin writes", async () =>
     port: 0,
     host: "127.0.0.1",
     groqKey: "test",
-    model: "openai/gpt-oss-120b",
+    model: "gemma2-9b-it",
     dataDir: "unused",
     allowedOrigins: ["http://127.0.0.1:3000"],
   };
@@ -165,4 +183,12 @@ test("HTTP boundary validates input and blocks cross-origin writes", async () =>
   });
   assert.equal(created.status, 201);
   assert.equal(created.body.room, "lobby");
+
+  const term = await makeRequest(app, {
+    method: "POST",
+    url: `/api/sessions/${created.body.id}/terminal`,
+    body: { command: "status" },
+  });
+  assert.equal(term.status, 200);
+  assert.match(term.body.output, /PULSE/);
 });

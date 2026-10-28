@@ -117,3 +117,4 @@ export function CasePanel({ session, health, onSelectClue }: CasePanelProps) {
     </aside>
   );
 }
+

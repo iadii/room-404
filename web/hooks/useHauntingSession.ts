@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { GAME_CONSTANTS } from "../constants/game";
-import type { Health, Session } from "../types/game";
+import type { Effect, Health, Session } from "../types/game";
 
 async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, options);
@@ -11,6 +11,13 @@ async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
     throw new Error(data.error || "The hotel has stopped responding.");
   }
   return data as T;
+}
+
+export interface TerminalExecutionResponse {
+  readonly output: string;
+  readonly session: Session;
+  readonly effect?: Effect;
+  readonly screenMessage?: string;
 }
 
 export function useHauntingSession() {
@@ -89,6 +96,30 @@ export function useHauntingSession() {
     }
   }
 
+  async function executeTerminalCommand(command: string): Promise<TerminalExecutionResponse | null> {
+    if (!session || isBusy) return null;
+    setIsBusy(true);
+    setError("");
+
+    try {
+      const res = await fetchJson<TerminalExecutionResponse>(
+        `/api/sessions/${session.id}/terminal`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ command }),
+        },
+      );
+      setSession(res.session);
+      return res;
+    } catch (cause) {
+      setError(cause instanceof Error ? cause.message : "Terminal communication interrupted.");
+      return null;
+    } finally {
+      setIsBusy(false);
+    }
+  }
+
   function leaveHotel() {
     localStorage.removeItem(GAME_CONSTANTS.LOCAL_STORAGE_VISIT_KEY);
     setSession(null);
@@ -104,6 +135,7 @@ export function useHauntingSession() {
     setError,
     checkIn,
     performAction,
+    executeTerminalCommand,
     leaveHotel,
   };
 }

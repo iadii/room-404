@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CasePanel } from "../components/CasePanel";
 import { ClueModal } from "../components/ClueModal";
 import { Footer } from "../components/Footer";
+import { GhostTerminal } from "../components/GhostTerminal";
 import { Header } from "../components/Header";
 import { LandingView } from "../components/LandingView";
 import { StoryPanel } from "../components/StoryPanel";
@@ -22,6 +23,7 @@ export default function Home() {
     error,
     checkIn,
     performAction,
+    executeTerminalCommand,
     leaveHotel,
   } = useHauntingSession();
 
@@ -29,6 +31,7 @@ export default function Home() {
 
   const [activeEffect, setActiveEffect] = useState<Effect>("none");
   const [selectedClue, setSelectedClue] = useState<Evidence | null>(null);
+  const [activeView, setActiveView] = useState<"terminal" | "surveillance">("terminal");
 
   // Trigger transient screen glitch effect on every new scene
   const latestScene = session?.scenes.at(-1);
@@ -41,6 +44,18 @@ export default function Home() {
     );
     return () => window.clearTimeout(timer);
   }, [latestScene?.id]);
+
+  async function handleTerminalExecution(command: string) {
+    const result = await executeTerminalCommand(command);
+    if (result?.effect && result.effect !== "none") {
+      setActiveEffect(result.effect);
+      window.setTimeout(
+        () => setActiveEffect("none"),
+        GAME_CONSTANTS.EFFECT_DURATION_MS,
+      );
+    }
+    return result;
+  }
 
   const isHighFear = (session?.fear ?? 0) >= GAME_CONSTANTS.HIGH_FEAR_THRESHOLD;
   const siteClasses = [
@@ -85,29 +100,56 @@ export default function Home() {
         <main className="game">
           <div className="game-top">
             <span className="tiny-label">
-              <span /> VISIT #{session.id.slice(0, 6).toUpperCase()}
+              <span /> VISIT #{session.id.slice(0, 6).toUpperCase()} ·{" "}
+              {session.roomInfo.name.toUpperCase()}
             </span>
-            <div>
-              <button onClick={leaveHotel}>← LEAVE THE HOTEL</button>
+
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <div className="view-switch">
+                <button
+                  className={activeView === "terminal" ? "active" : ""}
+                  onClick={() => setActiveView("terminal")}
+                  type="button"
+                >
+                  ⌨ GHOST TERMINAL
+                </button>
+                <button
+                  className={activeView === "surveillance" ? "active" : ""}
+                  onClick={() => setActiveView("surveillance")}
+                  type="button"
+                >
+                  📹 CCTV CONSOLE
+                </button>
+              </div>
+              <button onClick={leaveHotel}>← LEAVE</button>
               <a href={`/api/sessions/${session.id}/export`}>
-                ↓ SAVE TRANSCRIPT
+                ↓ TRANSCRIPT
               </a>
             </div>
           </div>
 
           <div className="game-grid">
-            <StoryPanel
-              session={session}
-              isBusy={isBusy}
-              error={error}
-              onAction={performAction}
-              onLeave={leaveHotel}
-            />
-
-            <SurveillanceStage
-              currentScene={latestScene}
-              activeEffect={activeEffect}
-            />
+            {activeView === "terminal" ? (
+              <GhostTerminal
+                session={session}
+                isBusy={isBusy}
+                onRunCommand={handleTerminalExecution}
+              />
+            ) : (
+              <>
+                <StoryPanel
+                  session={session}
+                  isBusy={isBusy}
+                  error={error}
+                  onAction={performAction}
+                  onLeave={leaveHotel}
+                />
+                <SurveillanceStage
+                  currentScene={latestScene}
+                  activeEffect={activeEffect}
+                />
+              </>
+            )}
 
             <CasePanel
               session={session}

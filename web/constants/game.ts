@@ -22,3 +22,4 @@ export const GAME_CONSTANTS = {
   AUDIO_FREQUENCY_HZ: 54,
   AUDIO_GAIN_LEVEL: 0.014,
 } as const;
+

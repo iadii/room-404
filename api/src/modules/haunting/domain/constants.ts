@@ -45,3 +45,4 @@ export const ALLOWED_EFFECTS = new Set<Effect>([
   "mirror",
   "static",
 ]);
+

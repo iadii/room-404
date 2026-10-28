@@ -36,6 +36,15 @@ export function hauntingRouter(service: HauntingService): Router {
     res.json(updated);
   });
 
+  router.post("/sessions/:id/terminal", async (req, res) => {
+    const { command = "" } = req.body ?? {};
+    if (typeof command !== "string" || command.length > 200) {
+      throw new GameRuleError("Send a terminal command under 200 characters.");
+    }
+    const result = await service.executeTerminalCommand(String(req.params.id), command);
+    res.json(result);
+  });
+
   router.get("/sessions/:id/export", async (req, res) => {
     const { filename, markdown } = await service.export(String(req.params.id));
     res

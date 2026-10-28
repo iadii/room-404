@@ -13,7 +13,7 @@ export interface AppConfig {
 
 const DEFAULT_PORT = 4000;
 const DEFAULT_HOST = "127.0.0.1";
-const DEFAULT_MODEL = "openai/gpt-oss-120b";
+const DEFAULT_MODEL = "gemma2-9b-it";
 const DEFAULT_DATA_DIR = "data";
 const DEFAULT_ALLOWED_ORIGINS = ["http://127.0.0.1:3000", "http://localhost:3000"];
 

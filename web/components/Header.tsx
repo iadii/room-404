@@ -39,3 +39,4 @@ export function Header({ health, isSoundActive, onToggleSound }: HeaderProps) {
     </header>
   );
 }
+
