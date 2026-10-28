@@ -137,10 +137,7 @@ test("HTTP boundary validates input and blocks cross-origin writes", async () =>
     port: 0,
     host: "127.0.0.1",
     groqKey: "test",
-    model: "gemma2-9b-it",
-    ollamaUrl: "",
-    elevenLabsKey: "",
-    elevenLabsVoiceId: "",
+    model: "openai/gpt-oss-120b",
     dataDir: "unused",
     allowedOrigins: ["http://127.0.0.1:3000"],
   };

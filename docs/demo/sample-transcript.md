@@ -102,3 +102,4 @@ Your palm trembles as the key, oddly warm, slides into the lock. The desk's wood
 * **Manifestation**: static
 * **Glitch message**: `…error… echo…`
 * **Evidence cited**: REGISTER
+
